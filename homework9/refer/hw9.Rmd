@@ -1,0 +1,33 @@
+---
+title: "nba"
+author: "zyz"
+date: "2020/12/19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1.读入NBA数据集
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+dat0 <- read.csv("NBA.csv")  #读入数据
+summary(dat0) #对数据进行汇总
+```
+
+## 2.对所有的自变量进行主成分分析，选择主成分个数时使用碎石图的方法，并对结果进行解读
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# 首先对数据进行处理，将百分制数据调整为实数
+dat0$投篮率 <- as.numeric(gsub("\\%", "", dat0$投篮率))/100 
+dat0$三分投球率 <- as.numeric(gsub("\\%", "", dat0$三分投球率))/100 
+dat0$罚球率 <- as.numeric(gsub("\\%", "", dat0$罚球率))/100 
+# 对自变量进行标准化
+dat0[2:18] <- scale(dat0[2:18])
+pca <- princomp(dat0[2:18], cor = T)  #进行主成分分析
+summary(pca)
+screeplot(pca, type = 'lines')
+pc1 <- -eigen(cor(dat0[2:18]))$vectors[,1]
+y1 <- as.matrix(dat0[,2:18])%*%pc1
+```
