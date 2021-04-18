@@ -1,3 +1,3 @@
-# DATA130003-Introduction_to_Mahcine_Learning
+# DATA130003-Introduction_to_Machine_Learning
 Homework and projects of course "Machine Learning" (2020 Autumn)
 
